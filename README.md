@@ -100,7 +100,7 @@ created their SSH key in the default `~.ssh/` directory. So, the command
 above can be issued as follows instead:
 
 ``` r
-cyphr::data_admin_init(".", path_user = "~.ssh/id_rsa")
+cyphr::data_admin_init(".", path_user = "~/.ssh/id_rsa")
 ```
 
 or simply
