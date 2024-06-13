@@ -40,7 +40,7 @@ analysis, and reporting and uses GitHub for versioning.
 
 The most appropriate tool in the R ecosystem that can support the
 research project team in fulfilling the requirements for data protection
-is the `{cyphr}` package\[1\].
+is the [`{cyphr}` package](https://docs.ropensci.org/cyphr/).
 
 Following is the recommended/suggested R workflow that will meet the
 requirements for data protection as per the respective institution’s
@@ -230,6 +230,31 @@ We can check whether the collaborator key has been added by:
 cyphr::data_admin_list_keys(".")
 ```
 
-which now shows 2 keys.
+which now shows more than 1 key.
 
-1.  <https://docs.ropensci.org/cyphr/>
+## Additional considerations in relation to reproducibility across collaborators
+
+  - Since authorised collaborators will need to use their own keys to
+    encrypt and decrypt, the step for creating an object for individual
+    keys will need to be run in such a way that it will know who the
+    current user is and then create the key object based on the path to
+    the current user’s SSH key on their computers. Possible solutions to
+    this are:
+    
+      - Manually create a key object outside of the reproducible
+        workflow specific for the user (but with the same key object
+        name for all users). Once the key object is generated, all other
+        steps of the workflow can be reproduced (including encryption
+        and decryption).
+    
+      - Creating a function that will identify who the current user is
+        (maybe based on GitHub user credentials) and then specify the
+        path to SSH keys based on this and then generate the key object.
+        This approach has the potential of being reproducible all
+        throughout.
+    
+      - fix the SSH key location to the default location used by
+        `ssh-keygen` by default (`~/.ssh/id_rsa`) so that the same path
+        can be used to generate each users key object. This will likely
+        work for macOS and Linux machines but will most likely not work
+        for Windows machines.
