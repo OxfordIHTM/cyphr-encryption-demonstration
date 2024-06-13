@@ -168,9 +168,68 @@ But if we decrypt the file first and then read it:
 cyphr::decrypt(
   expr = read.csv("data-raw/iris.csv"),
   key = admin_key
-)
+) |>
+  head()
 ```
 
 we are able to retrieve the data into R.
+
+``` r
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa
+```
+
+### Adding collaborators to access the data
+
+Given that the team uses GitHub for versioning, the next step for the
+admin or research project team lead is to distribute the project
+repository as currently structured to their research project team
+members and authorised collaborators. This will be done by adding them
+to the project repository as members/collaborators.
+
+Once added, these collaborators can now clone the repository and get
+their own copies of the workflow on their own machines. When they clone
+their own copies, this includes the encryption setup made by the admin
+or research project team lead.
+
+In order for research collaborators to be able to access and decrypt any
+encrypted data in the project repository, they will need to have created
+their own personal SSH key and make a request to be added to the project
+via the following commands:
+
+``` r
+## Get the collaborator1 key ----
+collaborator1_key <- cyphr::data_key(".", path_user = path_key_collaborator1)
+
+## Request to be added ----
+cyphr::data_request_access(".", path_user = path_key_collaborator1)
+```
+
+### Approval of collaborator request
+
+Once the research project team member or collaborator has made a
+request, the admin or research project team lead can approve this
+request as follows:
+
+``` r
+## View collaborator request ----
+cyphr::data_admin_list_requests(".")
+
+## Authorise collaborator request ----
+cyphr::data_admin_authorise(".", yes = TRUE, path_user = admin_key)
+```
+
+We can check whether the collaborator key has been added by:
+
+``` r
+cyphr::data_admin_list_keys(".")
+```
+
+which now shows 2 keys.
 
 1.  <https://docs.ropensci.org/cyphr/>
