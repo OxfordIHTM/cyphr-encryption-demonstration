@@ -2,7 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-data
-!data/.gitkeep
-data-raw
-!data-raw/.gitkeep
+# data
+# !data/.gitkeep
+# data-raw
+# !data-raw/.gitkeep
